@@ -1,0 +1,24 @@
+{
+  "name": "@blueshit/pm2-io",
+  "version": "0.0.1",
+  "description": "轻量级 @pm2/io （原 pmx ），保留核心功能精简依赖，体验飞一般的感觉",
+  "main": "dist/lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/npmshit/pm2-io.git"
+  },
+  "keywords": [
+    "pmx",
+    "pm2",
+    "pm2/io"
+  ],
+  "author": "Yourtion <yourtion@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/npmshit/pm2-io/issues"
+  },
+  "homepage": "https://github.com/npmshit/pm2-io#readme"
+}
