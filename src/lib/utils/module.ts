@@ -1,5 +1,5 @@
 import * as fs from 'fs'
-import * as Debug from 'debug'
+import Debug from '@modernjs/debug'
 import * as path from 'path'
 
 const debug = Debug('axm:utils:module')

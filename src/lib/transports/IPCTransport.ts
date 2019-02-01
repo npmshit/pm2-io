@@ -1,12 +1,12 @@
 import { Transport, TransportConfig } from '../services/transport'
-import * as Debug from 'debug'
+import Debug from '@modernjs/debug'
 import { Action } from '../services/actions'
 import { InternalMetric } from '../services/metrics'
-import { EventEmitter2 } from 'eventemitter2'
+import  EventEmitter  from 'events'
 import * as cluster from 'cluster'
 import * as EventLoopInspector from 'event-loop-inspector'
 
-export class IPCTransport extends EventEmitter2 implements Transport {
+export class IPCTransport extends EventEmitter implements Transport {
 
   private initiated: Boolean = false // tslint:disable-line
   private logger: Function = Debug('axm:transport:ipc')

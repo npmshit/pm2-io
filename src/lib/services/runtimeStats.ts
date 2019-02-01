@@ -1,13 +1,13 @@
 'use strict'
 
-import Debug from 'debug'
+import Debug from '@modernjs/debug'
 import utils from '../utils/module'
-import { EventEmitter2 } from 'eventemitter2'
+import EventEmitter from 'events'
 
-export class RuntimeStatsService extends EventEmitter2 {
+export class RuntimeStatsService extends EventEmitter {
 
   private logger: any = Debug('axm:services:runtimeStats')
-  private handle: (data: Object) => void | undefined
+  private handle?: (data: Object) => void | undefined
   private noduleInstance: any
   private enabled: boolean = false
 

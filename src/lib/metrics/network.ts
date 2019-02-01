@@ -1,12 +1,12 @@
 import * as netModule from 'net'
 import { MetricService, MetricType } from '../services/metrics'
 import { MetricInterface } from '../features/metrics'
-import * as Debug from 'debug'
+import Debug from '@modernjs/debug'
 import Meter from '../utils/metrics/meter'
-import * as shimmer from 'shimmer'
+import  shimmer from 'shimmer'
 import { ServiceManager } from '../serviceManager'
 
-export class NetworkTrafficConfig {
+export interface NetworkTrafficConfig {
   upload: boolean
   download: boolean
 }
@@ -87,12 +87,12 @@ export default class NetworkMetric implements MetricInterface {
       }
       shimmer.wrap(netModule.Socket.prototype, 'read', function (original) {
         return function () {
-          this.on('data', (data) => {
+          this.on('data', (data: any) => {
             if (typeof data.length === 'number') {
               downloadMeter.mark(data.length)
             }
           })
-          return original.apply(this, arguments)
+          return original.apply(this, arguments as any)
         }
       })
     }, 500)
@@ -121,11 +121,11 @@ export default class NetworkMetric implements MetricInterface {
         return this.logger(`Already patched socket write, canceling`)
       }
       shimmer.wrap(netModule.Socket.prototype, 'write', function (original) {
-        return function (data) {
+        return function (data: any) {
           if (typeof data.length === 'number') {
             uploadMeter.mark(data.length)
           }
-          return original.apply(this, arguments)
+          return original.apply(this, arguments as any)
         }
       })
     }, 500)

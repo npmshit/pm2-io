@@ -1,12 +1,11 @@
 import * as v8 from 'v8'
 import { MetricService, Metric } from '../services/metrics'
 import { MetricInterface } from '../features/metrics'
-import Debug from 'debug'
+import Debug from '@modernjs/debug'
 import { ServiceManager } from '../serviceManager'
 import Gauge from '../utils/metrics/gauge'
 
-/* tslint:disable */
-export class V8MetricsConfig {
+export interface V8MetricsConfig extends Record<string, boolean> {
   new_space: boolean
   old_space: boolean
   map_space: boolean
@@ -16,7 +15,6 @@ export class V8MetricsConfig {
   heap_used_size: boolean
   heap_used_percent: boolean
 }
-/* tslint:enable */
 
 const defaultOptions: V8MetricsConfig = {
   new_space: false,
@@ -40,37 +38,6 @@ export default class V8Metric implements MetricInterface {
   private unitKB = 'MiB'
 
   private metricsDefinitions = {
-    /*
-    new_space: {
-      name: 'New space used size',
-      id: 'internal/v8/heap/space/new',
-      unit: this.unitKB,
-      historic: true
-    },
-    old_space: {
-      name: 'Old space used size',
-      id: 'internal/v8/heap/space/old',
-      unit: this.unitKB,
-      historic: true
-    },
-    map_space: {
-      name: 'Map space used size',
-      id: 'internal/v8/heap/space/map',
-      unit: this.unitKB,
-      historic: false
-    },
-    code_space: {
-      name: 'Code space used size',
-      id: 'internal/v8/heap/space/code',
-      unit: this.unitKB,
-      historic: false
-    },
-    large_object_space: {
-      name: 'Large object space used size',
-      id: 'internal/v8/heap/space/large',
-      unit: this.unitKB,
-      historic: false
-    },*/
     total_heap_size: {
       name: 'Heap Size',
       id: 'internal/v8/heap/total',
@@ -89,13 +56,10 @@ export default class V8Metric implements MetricInterface {
       unit: this.unitKB,
       historic: true
     }
-  }
+  } as Record<string, any>
 
-  init (config?: V8MetricsConfig | boolean) {
+  init (config: V8MetricsConfig | boolean = defaultOptions) {
     if (config === false) return
-    if (config === undefined) {
-      config = defaultOptions
-    }
     if (config === true) {
       config = defaultOptions
     }
@@ -117,7 +81,7 @@ export default class V8Metric implements MetricInterface {
     }
 
     this.timer = setInterval(() => {
-      const stats = v8.getHeapStatistics()
+      const stats = v8.getHeapStatistics() as Record<string, any>
       // update each metrics that we declared
       for (let metricName in this.metricsDefinitions) {
         if (typeof stats[metricName] !== 'number') continue

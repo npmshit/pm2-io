@@ -7,7 +7,7 @@ import { ActionService } from '../services/actions'
 import MiscUtils from '../utils/miscellaneous'
 import { InspectorService } from '../services/inspector'
 import * as inspector from 'inspector'
-import * as Debug from 'debug'
+import Debug from '@modernjs/debug'
 import * as semver from 'semver'
 
 class CurrentProfile {

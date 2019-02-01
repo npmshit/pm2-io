@@ -20,5 +20,13 @@
   "bugs": {
     "url": "https://github.com/npmshit/pm2-io/issues"
   },
-  "homepage": "https://github.com/npmshit/pm2-io#readme"
+  "homepage": "https://github.com/npmshit/pm2-io#readme",
+  "dependencies": {
+    "@modernjs/debug": "^1.0.1",
+    "shimmer": "^1.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^10.12.19",
+    "@types/shimmer": "^1.0.1"
+  }
 }

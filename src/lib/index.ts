@@ -1,7 +1,7 @@
 'use strict'
 
 import Configuration from './configuration'
-import Debug from 'debug'
+import Debug from '@modernjs/debug'
 import { ServiceManager } from './serviceManager'
 import { createTransport, TransportConfig, Transport } from './services/transport'
 import { FeatureManager } from './featureManager'
@@ -15,9 +15,7 @@ import Counter from './utils/metrics/counter'
 import { EventsFeature } from './features/events'
 import { TracingConfig } from './features/tracing'
 import { InspectorService } from './services/inspector'
-import { canUseInspector } from './constants'
 import { MetricConfig } from './features/metrics'
-import { ProfilingConfig } from './features/profiling'
 import { RuntimeStatsService } from './services/runtimeStats'
 import { Entrypoint } from './features/entrypoint'
 
@@ -37,10 +35,6 @@ export class IOConfig {
     eventLoopDump?: boolean
   }
   /**
-   * Configure availables profilers that will be exposed
-   */
-  profiling?: ProfilingConfig | boolean = true
-  /**
    * Configure the transaction tracing options
    */
   tracing?: TracingConfig | boolean = false
@@ -57,7 +51,6 @@ export class IOConfig {
 
 export const defaultConfig: IOConfig = {
   catchExceptions: true,
-  profiling: true,
   metrics: {
     v8: true,
     network: false,
@@ -71,7 +64,7 @@ export const defaultConfig: IOConfig = {
 
 export default class PMX {
 
-  private initialConfig: IOConfig
+  private initialConfig: IOConfig = defaultConfig;
   private featureManager: FeatureManager = new FeatureManager()
   private transport: Transport | null = null
   private actionService: ActionService | null = null
@@ -84,7 +77,7 @@ export default class PMX {
   /**
    * Init the APM instance, you should *always* init it before using any method
    */
-  init (config?: IOConfig) {
+  init (config: IOConfig = defaultConfig) {
     const callsite = (new Error().stack || '').split('\n')[2]
     if (callsite && callsite.length > 0) {
       this.logger(`init from ${callsite}`)
@@ -94,20 +87,10 @@ export default class PMX {
       this.logger(`Calling init but was already the case, destroying and recreating`)
       this.destroy()
     }
-    if (config === undefined) {
-      config = defaultConfig
-    }
 
     // Register the transport before any other service
-    this.transport = createTransport(config.standalone === true ? 'websocket' : 'ipc', config.apmOptions as TransportConfig)
+    this.transport = createTransport( 'ipc', config.apmOptions as TransportConfig)
     ServiceManager.set('transport', this.transport)
-
-    if (canUseInspector()) {
-      const Inspector = require('./services/inspector')
-      const inspectorService = new Inspector()
-      inspectorService.init()
-      ServiceManager.set('inspector', inspectorService)
-    }
 
     // register the action service
     this.actionService = new ActionService()

@@ -6,7 +6,7 @@ import Histogram from '../utils/metrics/histogram'
 import { ServiceManager, Service } from '../serviceManager'
 import constants from '../constants'
 import { Transport } from './transport'
-import * as Debug from 'debug'
+import Debug from '@modernjs/debug'
 import Gauge from '../utils/metrics/gauge'
 
 export enum MetricType {
@@ -69,7 +69,7 @@ export interface InternalMetric {
   value?: number
 }
 
-export class Metric {
+export interface Metric {
   /**
    * Display name of the metric, it should be a clear name that everyone can understand
    */
@@ -97,11 +97,11 @@ export class Metric {
   value?: () => number
 }
 
-export class MetricBulk extends Metric {
+export interface MetricBulk extends Metric {
   type: MetricType
 }
 
-export class HistogramOptions extends Metric {
+export interface HistogramOptions extends Metric {
   measurement: MetricMeasurements
 }
 

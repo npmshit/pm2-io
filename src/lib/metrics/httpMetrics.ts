@@ -1,7 +1,5 @@
-'use strict'
-
-import * as shimmer from 'shimmer'
-import Debug from 'debug'
+import shimmer from 'shimmer'
+import Debug from '@modernjs/debug'
 import Configuration from '../configuration'
 import { MetricInterface } from '../features/metrics'
 import { ServiceManager } from '../serviceManager'
@@ -18,7 +16,7 @@ import {
   Metric
 } from '../services/metrics'
 
-export class HttpMetricsConfig {
+export interface HttpMetricsConfig {
   http: boolean
 }
 

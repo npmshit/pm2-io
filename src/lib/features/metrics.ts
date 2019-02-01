@@ -1,4 +1,4 @@
-import Debug from 'debug'
+import Debug from '@modernjs/debug'
 import { Feature, getObjectAtPath } from '../featureManager'
 import EventLoopHandlesRequestsMetric, { EventLoopMetricOption } from '../metrics/eventLoopMetrics'
 import NetworkMetric, { NetworkTrafficConfig } from '../metrics/network'

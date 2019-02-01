@@ -1,4 +1,4 @@
-import Debug from 'debug'
+import Debug from '@modernjs/debug'
 const debug = Debug('axm:configuration')
 
 import { ServiceManager } from './serviceManager'

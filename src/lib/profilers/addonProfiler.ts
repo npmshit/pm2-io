@@ -5,7 +5,7 @@ import { ServiceManager } from '../serviceManager'
 import { Transport } from '../services/transport'
 import { ActionService } from '../services/actions'
 import MiscUtils from '../utils/miscellaneous'
-import * as Debug from 'debug'
+import Debug from '@modernjs/debug'
 
 class CurrentProfile {
   uuid: string

@@ -2,12 +2,12 @@
 
 import { MetricService, MetricType, MetricMeasurements } from '../services/metrics'
 import { ServiceManager } from '../serviceManager'
-import * as Debug from 'debug'
+import Debug from '@modernjs/debug'
 import { MetricInterface } from '../features/metrics'
 import Histogram from '../utils/metrics/histogram'
-import { RuntimeStatsService } from 'src/services/runtimeStats'
+import { RuntimeStatsService } from '../services/runtimeStats'
 
-export class RuntimeMetricsOptions {
+export interface RuntimeMetricsOptions {
   gcOldPause: boolean
   gcNewPause: boolean
   /**
@@ -34,7 +34,7 @@ export default class RuntimeMetrics implements MetricInterface {
   private metricService: MetricService | undefined
   private logger: any = Debug('axm:features:metrics:runtime')
   private runtimeStatsService: RuntimeStatsService | undefined
-  private handle: (data: Object) => void | undefined
+  private handle?: (data: Object) => void | undefined
   private metrics: Map<String, Histogram> = new Map<String, Histogram>()
 
   init (config?: RuntimeMetricsOptions | boolean) {
@@ -163,12 +163,12 @@ export default class RuntimeMetrics implements MetricInterface {
       }
     }
 
-    this.runtimeStatsService.on('data', this.handle)
+    this.runtimeStatsService.on('data', this.handle!)
   }
 
   destroy () {
     if (this.runtimeStatsService !== undefined) {
-      this.runtimeStatsService.removeListener('data', this.handle)
+      this.runtimeStatsService.removeListener('data', this.handle!)
     }
     this.logger('destroy')
   }

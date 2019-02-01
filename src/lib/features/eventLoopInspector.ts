@@ -2,7 +2,7 @@ import { ActionService } from '../services/actions'
 import { ServiceManager } from '../serviceManager'
 import { Feature } from '../featureManager'
 import * as EventLoopInspector from 'event-loop-inspector'
-import * as Debug from 'debug'
+import Debug from '@modernjs/debug'
 
 class EventLoopInspectorConfig {
   enabled: boolean

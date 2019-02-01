@@ -1,6 +1,6 @@
 import { ServiceManager } from '../serviceManager'
 import { Transport } from './transport'
-import * as Debug from 'debug'
+import Debug from '@modernjs/debug'
 
 export class Action {
   handler: Function

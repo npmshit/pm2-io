@@ -1,14 +1,13 @@
 
 import { NotifyFeature } from './features/notify'
-import { ProfilingFeature } from './features/profiling'
 import { EventLoopInspectorFeature } from './features/eventLoopInspector'
 import { EventsFeature } from './features/events'
-import { IOConfig } from './pmx'
+import { IOConfig } from './index'
 import { MetricsFeature } from './features/metrics'
-import * as Debug from 'debug'
+import Debug from '@modernjs/debug'
 import { TracingFeature } from './features/tracing'
 
-export function getObjectAtPath (context: Object, path: string): any {
+export function getObjectAtPath (context: Record<string, any>, path: string): any {
   if (path.indexOf('.') === -1 && path.indexOf('[') === -1) {
     return context[path]
   }
@@ -28,7 +27,7 @@ export function getObjectAtPath (context: Object, path: string): any {
   return result
 }
 
-class AvailableFeature {
+interface AvailableFeature {
   /**
    * Name of the feature
    */
@@ -56,11 +55,6 @@ const availablesFeatures: AvailableFeature[] = [
     name: 'notify',
     optionsPath: '.',
     module: NotifyFeature
-  },
-  {
-    name: 'profiler',
-    optionsPath: 'profiling',
-    module: ProfilingFeature
   },
   {
     name: 'eventLoopInspector',

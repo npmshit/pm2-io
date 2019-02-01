@@ -2,7 +2,7 @@ import * as util from 'util'
 import { Feature } from '../featureManager'
 import Configuration from '../configuration'
 import { ServiceManager } from '../serviceManager'
-import Debug from 'debug'
+import Debug from '@modernjs/debug'
 import { Transport } from '../services/transport'
 
 export class NotifyOptions {

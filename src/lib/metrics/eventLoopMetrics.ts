@@ -2,12 +2,12 @@
 
 import { MetricService, InternalMetric, MetricType } from '../services/metrics'
 import { ServiceManager } from '../serviceManager'
-import * as Debug from 'debug'
+import Debug from '@modernjs/debug'
 import { MetricInterface } from '../features/metrics'
 import Histogram from '../utils/metrics/histogram'
-import { RuntimeStatsService } from 'src/services/runtimeStats'
+import { RuntimeStatsService } from '../services/runtimeStats'
 
-export class EventLoopMetricOption {
+export interface EventLoopMetricOption {
   /**
    * Toggle the metrics about the actives handles/requests in the event loop
    * see http://docs.libuv.org/en/v1.x/design.html#handles-and-requests
@@ -34,7 +34,7 @@ export default class EventLoopHandlesRequestsMetric implements MetricInterface {
   private delayTimer: NodeJS.Timer | undefined
   private delayLoopInterval: number = 1000
   private runtimeStatsService: RuntimeStatsService | undefined
-  private handle: (data: any) => void | undefined
+  private handle?: (data: any) => void | undefined
 
   init (config?: EventLoopMetricOption | boolean) {
     if (config === false) return
@@ -141,7 +141,7 @@ export default class EventLoopHandlesRequestsMetric implements MetricInterface {
       clearInterval(this.delayTimer)
     }
     if (this.runtimeStatsService !== undefined) {
-      this.runtimeStatsService.removeListener('data', this.handle)
+      this.runtimeStatsService.removeListener('data', this.handle!)
     }
     this.logger('destroy')
   }

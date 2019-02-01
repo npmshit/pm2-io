@@ -1,7 +1,7 @@
 import { ServiceManager } from '../serviceManager'
 import { Feature } from '../featureManager'
 import { Transport } from '../services/transport'
-import * as Debug from 'debug'
+import Debug from '@modernjs/debug'
 
 export class EventsFeature implements Feature {
 
